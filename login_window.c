@@ -88,7 +88,7 @@ void main()
       system("COLOR 8F");
       printf("\n\n\n                        MAIN MENU                              ");
       printf("\n          ____________________________________________________________");
-      // SetConsoleTextAttribute(screen,10);
+      // SetConsoleTextAttribute(screen,18);
        printf("\n\n\n");
        printf("           1.  ADD A NEW CONTACT       \n\n");
        printf("           2.  EDITING            \n\n");
