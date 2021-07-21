@@ -17,7 +17,7 @@ void main()
    for(i=0;i<5;i++)
    {
 
-      printf("........welcome.........\n");
+      printf("\n\n\n\n           ..............................welcome..............................................\n");
       Sleep(500);
       system("cls");
       Sleep(500);
@@ -68,7 +68,7 @@ void main()
      system("cls");
      system("COLOR E3") ;
       screen= GetStdHandle(STD_OUTPUT_HANDLE);
-      SetConsoleTextAttribute(screen,12);
+      SetConsoleTextAttribute(screen,57);
       printf("******************************************* CONTACT MANAGEMENT ***********************************************");
       printf("\n\n\n");
       printf("                   ||||||||||***************     FRONTEND :   VISUAL STUDIO CODE     *************|||||||||||");
@@ -77,6 +77,7 @@ void main()
       printf("\n\n\n");
       printf("                   ||||||||||***************     DEVELOPED BY : GARIMA JAIN          ************||||||||||||");
       printf("\n\n\n");
+      getch(); //press any key
       printf("    PLEASE WAIT  ");
       for(i=0;i<40;i++)
       {
@@ -84,10 +85,10 @@ void main()
          Sleep(30);
       }
       system("cls");
-      system("COLOR 87");
+      system("COLOR 8F");
       printf("\n\n\n                        MAIN MENU                              ");
       printf("\n          ____________________________________________________________");
-      // SetConsoleTextAttribute(screen,15);
+      // SetConsoleTextAttribute(screen,10);
        printf("\n\n\n");
        printf("           1.  ADD A NEW CONTACT       \n\n");
        printf("           2.  EDITING            \n\n");
@@ -97,6 +98,7 @@ void main()
        printf("           6.  EXIT                \n\n");
        printf("\n\n       _______________________________________________________________");
        printf(" \n\n\n");
+       getch(); //press any key
        for(i=0;i<10;i++)
        {
              printf("      ENTER  YOUR  CHOICE..................  ");
