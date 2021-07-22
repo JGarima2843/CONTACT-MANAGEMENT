@@ -207,7 +207,7 @@ void list_contact()
       printf("- ");
       fp=fopen("info.dat","r");
 
-      while(fread(&person,sizeof(person),1,fp)!=NULL)
+      while(fread(&person,sizeof(person),1,fp)!=NULL)//reading of data from info binary file.
       {
         printf("\n %d  \t\t  %s    \t\t %s  \t\t%c    \t\t%s    \t\t %s \n",person.sno,person.category,person.name,person.gender,person.address,person.ph_no);
       } 
