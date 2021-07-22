@@ -5,12 +5,26 @@
 #include<string.h>
 //#include<dos.h>
 HANDLE screen ;
+void add_contact();
+void edit();
+void delete_contact();
+void list_contact();
+void change_password(); 
+struct contact
+{
+   int sno ;
+   char category[20] ;
+   char name[20] ;
+   char gender ;
+   char ph_no[11];
+   char address[50];
+} person ;
+
 void main()
 {
    int c;
    c=220;
-   char pass[10],origin[10],ch,*passd ;
-   passd=origin ;
+   char pass[10],origin[10],ch,choice ;
    int i ;
    FILE*fp ;
    system("COLOR 4F");
@@ -99,21 +113,106 @@ void main()
        printf("\n\n       _______________________________________________________________");
        printf(" \n\n\n");
        getch(); //press any key
-       for(i=0;i<10;i++)
+       for(i=0;i<5;i++)
        {
              printf("      ENTER  YOUR  CHOICE..................  ");
                 Sleep(500);
                 system("cls");
                 Sleep(500);
        }
-
-
-
+       choice= getche();
+       switch (choice)
+       {
+       case'1' :
+        add_contact();
+          break;
+      /* case'2':
+         edit();
+         break ;
+       case '3':
+         delete_contact();
+         break ;*/
+       case'4' :
+          list_contact();
+          break ;
+      /* case'5':
+          change_password();
+          break ;
+       case'6':
+         exit(0); */  
+       }
+       getch();
   }
-
 
 }
 
+void add_contact()
+{
+   FILE*fp ;
+   int i ;
+   system("cls");
+   system("COLOR 8F");
+   printf("n\n\n                                               ADD A NEW CONTACT");
+   printf("\n\n");
+   for(i=0;i<80;i++)
+   {
+          printf("- ");
+   }
+   printf("\n ENTER SERIAL NUMBER :\n");
+   scanf("%d",&person.sno);
+   fflush(stdin);
+   printf(" \n ENTER CATEGORY :\n");
+   gets(person.category);
+   fflush(stdin);
+   printf("\n ENTER NAME :\n");
+   gets(person.name);
+   fflush(stdin);
+   printf("\n ENTER GENDER : \n");
+   scanf("%c",&person.gender);
+   fflush(stdin);
+   printf("\n ENTER PHONE NO: \n");
+   gets(person.ph_no);
+   fflush(stdin);
+   printf("\n ENTER ADDRESS :\n");
+   gets(person.address);
+   fflush(stdin);
+
+   fp = fopen("info.dat","ab");
+   fwrite(&person,sizeof(person),1,fp);
+   fclose(fp);
+
+   for(i=0;i<5;i++)
+   {
+      printf("\n\n\n      <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< CONTACT SAVED SUCCESSFULLY  >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+       Sleep(500);
+        system("cls");
+       Sleep(500); 
+   }
+   getch();
+
+}
+
+void list_contact()
+{
+   FILE*fp ;
+   int i ;
+   system("cls");
+   system("COLOR 9f");
+   for(i=0;i<74;i++)
+   printf("- ");
+   
+   printf("\n S.NO\t\t  CATEGORY\t\t  NAME\t\t  GENDER\t\t   ADDRESS\t\t   PHONE_NUMBER\t\t\n");
+    
+    for(i=0;i<74;i++)
+      printf("- ");
+      fp=fopen("info.dat","r");
+
+      while(fread(&person,sizeof(person),1,fp)!=NULL)
+      {
+        printf("\n %d  \t\t  %s    \t\t %s  \t\t%c    \t\t%s    \t\t %s \n",person.sno,person.category,person.name,person.gender,person.address,person.ph_no);
+      } 
+      fclose(fp);
+}
 
 
 
