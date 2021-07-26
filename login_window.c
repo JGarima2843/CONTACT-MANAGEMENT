@@ -102,7 +102,7 @@ void main()
       system("COLOR 8F");
       printf("\n\n\n                        MAIN MENU                              ");
       printf("\n          ____________________________________________________________");
-      // SetConsoleTextAttribute(screen,18);
+      // SetConsoleTextAttribute(screen,18);*/
        printf("\n\n\n");
        printf("           1.  ADD A NEW CONTACT       \n\n");
        printf("           2.  EDITING            \n\n");
@@ -126,20 +126,20 @@ void main()
        case'1' :
         add_contact();
           break;
-      /* case'2':
-         edit();
-         break ;
+      // case'2':
+      //   edit();
+      //   break ;
        case '3':
          delete_contact();
-         break ;*/
+         break ;
        case'4' :
           list_contact();
           break ;
-      /* case'5':
-          change_password();
-          break ;
+      // case'5':
+       //   change_password();
+        //  break ;
        case'6':
-         exit(0); */  
+         exit(0); 
        }
        getch();
   }
@@ -209,10 +209,84 @@ void list_contact()
 
       while(fread(&person,sizeof(person),1,fp)!=NULL)//reading of data from info binary file.
       {
-        printf("\n %d  \t\t  %s    \t\t %s  \t\t%c    \t\t%s    \t\t %s \n",person.sno,person.category,person.name,person.gender,person.address,person.ph_no);
+        printf("\n %d  \t\t  %s     \t\t %s   \t\t%c    \t\t%s    \t\t %s \n",person.sno,person.category,person.name,person.gender,person.address,person.ph_no);
       } 
       fclose(fp);
 }
 
+void delete_contact()
+{
+   int n,found ;
+   char choice ;
+   FILE*f1,*f2 ;
+   system("cls");
+   system("color 70");
+   printf(".......................DELETE THE CONTACT................................\n");
+   printf("-------------------------------------------------------------------------------------\n");
+    printf("enter the serial number to be deleted \n");
+    scanf("%d",&n);
+     f1= fopen("info.dat","rb");
+      found=0 ;
+     while(fread(&person,sizeof(person),1,f1)!=NULL)
+     {
 
+        if(person.sno==n)
+        {
+           printf("\n\n------------------------------------------------------------------------------------\n");
+           printf("CATEGORY          : %s",person.category);
+           printf("\nNAME            : %s",person.name);
+           printf("\nGENDER          : %c",person.gender);
+           printf("\nPHONE_NUMBER    : %s",person.ph_no);
+           printf("\nADDRESS         : %s",person.address);
+           printf("\n---------------------------------------------------------------------------------------");
+        
+        found=1 ;
+        break ;
+        } 
+     }
+     if(found==0)
+     {
+        system("COLOR 75");
+        for(int j=0;j<5;j++)
+        {
+                  printf("\n\n contact not found .....");
+                      Sleep(200);
+                      system("cls");
+                      Sleep(200);
+        }
+        fclose(f1);
+        return ;
+     }
+      else
+      printf("\n ARE YOU SURE TO DELETE THIS CONTACT (Y/N):::");
+      choice= getche() ;
+      if(choice=='y'||choice=="Y")
+      {
+         rewind(f1);
+         f2=fopen("temp.dat","wb");
+         //f1=fopen("info.dat","rb");
+         while(fread(&person,sizeof(person),1,f1)!=NULL)
+         {
+            if(person.sno!=n)
+            {
+                 fwrite(&person,sizeof(person),1,f2);
+            }
+         }
+         fclose(f1);
+         fclose(f2);
+         remove("info.dat");
+         rename("temp.dat","info.dat");
+
+         system("COLOR 79");
+         for(int j =0;j<5;j++)
+         {
+            printf("\n\n CONTACT DELETED SUCCESSFULLY  .......");
+            Sleep(200);
+            system("cls");
+            Sleep(200);
+         }
+         getch();
+           
+      }
+}
 
