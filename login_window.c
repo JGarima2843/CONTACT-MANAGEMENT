@@ -222,22 +222,23 @@ void list_contact()
 
 void delete_contact()
 {
-   int n,found ;
+   int n,found=0 ;
    char choice ;
    FILE*f1,*f2 ;
    system("cls");
    system("color 70");
    printf(".......................DELETE THE CONTACT................................\n");
    printf("-------------------------------------------------------------------------------------\n");
-    printf("enter the serial number to be deleted \n");
+    printf("enter the serial number to be deleted :: \n");
     scanf("%d",&n);
-     f1= fopen("info.dat","rb");
-      found=0 ;
+     f1= fopen("info.dat","r+b");
+
      while(fread(&person,sizeof(person),1,f1)!=NULL)
      {
 
         if(person.sno==n)
         {
+           found=1 ;
            printf("\n\n------------------------------------------------------------------------------------\n");
            printf("CATEGORY          : %s",person.category);
            printf("\nNAME            : %s",person.name);
@@ -246,14 +247,15 @@ void delete_contact()
            printf("\nADDRESS         : %s",person.address);
            printf("\n---------------------------------------------------------------------------------------");
         
-           found=1 ;
-            break ;
-        } 
+        }
+
+           break ;
+         
      }
    
      if(found==0)
      {
-        system("COLOR 75");
+        system("COLOR 74");
         for(int j=0;j<5;j++)
         {
                   printf("\n\n contact not found .....");
@@ -263,7 +265,8 @@ void delete_contact()
         }
         fclose(f1);
      }
-      else
+   else
+   {
       printf("\n ARE YOU SURE TO DELETE THIS CONTACT (Y/N):::");
       choice= getche() ;
       if(choice=='y'||choice=="Y")
@@ -306,9 +309,11 @@ void delete_contact()
             Sleep(200);
          }
          getch();
+      
+   }
+   
 }
-
-  void edit()
+void edit()
 {
    int n , pos,found ;
    FILE *fp ;
@@ -332,33 +337,35 @@ void delete_contact()
            printf("\nADDRESS         : %s",person.address);
            printf("\n---------------------------------------------------------------------------------------");
         
-        found=1 ;
-        break ;
+        found=1 ;  
       }
+      break ;
 
    }
    if(found==1)
-  { 
-   pos=ftell(fp);
-   fseek(fp,(pos-sizeof(person)),SEEK_SET);
+   { 
+     pos=ftell(fp);
+      fseek(fp,(pos-sizeof(person)),SEEK_SET);
 
-   fflush(stdin);
-   printf(" \n ENTER CATEGORY :\n");
-   gets(person.category);
-   fflush(stdin);
-   printf("\n ENTER NAME :\n");
-   gets(person.name);
-   fflush(stdin);
-   printf("\n ENTER GENDER : \n");
-   scanf("%c",&person.gender);
-   fflush(stdin);
-   printf("\n ENTER PHONE NO: \n");
-   gets(person.ph_no);
-   fflush(stdin);
-   printf("\n ENTER ADDRESS :\n");
-   gets(person.address);
-   fflush(stdin);
-   fwrite(&person,sizeof(person),1,fp);
-   fclose(fp);
+        fflush(stdin);
+             printf(" \n ENTER CATEGORY :\n");
+             gets(person.category);
+                fflush(stdin);
+             printf("\n ENTER NAME :\n");
+             gets(person.name);
+                fflush(stdin);
+             printf("\n ENTER GENDER : \n");
+                 scanf("%c",&person.gender);
+                     fflush(stdin);
+             printf("\n ENTER PHONE NO: \n");
+                 gets(person.ph_no);
+                  fflush(stdin);
+             printf("\n ENTER ADDRESS :\n");
+                  gets(person.address);
+                     fflush(stdin);
+           fwrite(&person,sizeof(person),1,fp);
+   
+     fclose(fp);
   }
+
 }
