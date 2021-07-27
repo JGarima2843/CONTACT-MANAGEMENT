@@ -3,22 +3,16 @@
 #include<stdlib.h>
 #include<conio.h>
 #include<string.h>
+#include"struct.h"
+#include"search.h"
 //#include<dos.h>
 HANDLE screen ;
 void add_contact();
 void edit();
 void delete_contact();
 void list_contact();
+void search_contact();
 void change_password(); 
-struct contact
-{
-   int sno ;
-   char category[20] ;
-   char name[20] ;
-   char gender ;
-   char ph_no[11];
-   char address[50];
-} person ;
 
 void main()
 {
@@ -138,10 +132,13 @@ void main()
           case'4' :
              list_contact();
                break ;
+          case'5':
+              search_contact();
+                 break ;
        // case'5':
         //   change_password();
             //  break ;
-          case'6':
+          case'7':
             exit(0); 
        }
           getch();
@@ -367,5 +364,42 @@ void edit()
    
      fclose(fp);
   }
+
+}
+
+
+void search_contact()
+{
+    system("cls");
+    system("COLOR 50");
+     char ch ;
+     printf("\n\n SEARCH CONTACT:::\n");
+     printf("----------------------------------------------------------------------------------------------------\n");
+     printf("\n  1. SEARCH BY SERIAL NO.\n");
+     printf("\n  2. SEARCH BY NAME \n");
+     printf("\n  3. SEARCH BY ADDRESS\n");
+     printf("\n  4. SEARCH BY PHONE NUMBER  \n");
+     printf("\n ");
+     printf("\n----------------------------------------------------------------------------------------------------\n");
+     printf(" ENTER YOUR CHOICE   (1-4)");
+     ch=getche();
+     switch (ch)
+     {
+        case'1':
+          search_serial(); 
+            break;
+        case'2':
+           search_name();
+             break ;
+         case'3':
+             search_address();
+               break ;
+         case'4':
+              search_phone();
+                break ;      
+         default:
+           printf("\n ************************ INCORRECT CHOICE *************************************\n");
+            break ;
+     }
 
 }
