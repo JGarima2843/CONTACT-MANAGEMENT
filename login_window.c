@@ -102,7 +102,7 @@ void main()
       system("COLOR 8F");
       printf("\n\n\n                        MAIN MENU                              ");
       printf("\n          ____________________________________________________________");
-      // SetConsoleTextAttribute(screen,18);*/
+      // SetConsoleTextAttribute(screen,18)
        printf("\n\n\n");
        printf("           1.  ADD A NEW CONTACT       \n\n");
        printf("           2.  EDITING            \n\n");
@@ -120,35 +120,41 @@ void main()
                 system("cls");
                 Sleep(500);
        }
-       choice= getche();
-       switch (choice)
-       {
-       case'1' :
-        add_contact();
-          break;
-      // case'2':
-      //   edit();
-      //   break ;
-       case '3':
-         delete_contact();
-         break ;
-       case'4' :
-          list_contact();
-          break ;
-      // case'5':
-       //   change_password();
-        //  break ;
-       case'6':
-         exit(0); 
+       
+       
+    
+         choice= getche();
+        switch (choice)
+        {
+          case'1' :
+           add_contact();
+             break;
+          case'2':
+             edit();
+            break ;
+          case '3':
+            delete_contact();
+              break ;
+          case'4' :
+             list_contact();
+               break ;
+       // case'5':
+        //   change_password();
+            //  break ;
+          case'6':
+            exit(0); 
        }
-       getch();
-  }
+          getch();
+      
+   
+   }   
+
 
 }
 
-void add_contact()
-{
-   FILE*fp ;
+void add_contact(){
+
+   FILE *fp ;
    int i ;
    system("cls");
    system("COLOR 8F");
@@ -177,7 +183,7 @@ void add_contact()
    gets(person.address);
    fflush(stdin);
 
-   fp = fopen("info.dat","ab");
+   fp = fopen("info.dat","wb");
    fwrite(&person,sizeof(person),1,fp);
    fclose(fp);
 
@@ -205,7 +211,7 @@ void list_contact()
     
     for(i=0;i<74;i++)
       printf("- ");
-      fp=fopen("info.dat","r");
+      fp=fopen("info.dat","rb");
 
       while(fread(&person,sizeof(person),1,fp)!=NULL)//reading of data from info binary file.
       {
@@ -240,10 +246,11 @@ void delete_contact()
            printf("\nADDRESS         : %s",person.address);
            printf("\n---------------------------------------------------------------------------------------");
         
-        found=1 ;
-        break ;
+           found=1 ;
+            break ;
         } 
      }
+   
      if(found==0)
      {
         system("COLOR 75");
@@ -255,7 +262,6 @@ void delete_contact()
                       Sleep(200);
         }
         fclose(f1);
-        return ;
      }
       else
       printf("\n ARE YOU SURE TO DELETE THIS CONTACT (Y/N):::");
@@ -272,7 +278,21 @@ void delete_contact()
                  fwrite(&person,sizeof(person),1,f2);
             }
          }
+      }   
+
          fclose(f1);
+         fclose(f2);
+         f2=fopen("temp.dat","wb");
+         
+            while(fread(&person,sizeof(person),1,f2)!=0)
+            {
+               if(person.sno==n+1)
+               {
+                  person.sno==n ;
+                  break ;
+               }
+            }
+         
          fclose(f2);
          remove("info.dat");
          rename("temp.dat","info.dat");
@@ -286,7 +306,59 @@ void delete_contact()
             Sleep(200);
          }
          getch();
-           
-      }
 }
 
+  void edit()
+{
+   int n , pos,found ;
+   FILE *fp ;
+   system("cls");
+   system("COLOR 65");
+   printf("\n\n ***************************** EDIT THE CONTACT *****************************\n\n");
+   printf("----------------------------------------------------------------------------------\n");
+   printf("ENTER THE SERIAL NUMBER TO BE EDITED");
+   scanf("%d",&n);
+   fp=fopen("info.dat","r+b");
+   found=0 ;
+   while(fread(&person,sizeof(person),1,fp)!=NULL)
+   {
+      if(person.sno==n)
+      {
+         printf("\n\n------------------------------------------------------------------------------------\n");
+           printf("CATEGORY          : %s",person.category);
+           printf("\nNAME            : %s",person.name);
+           printf("\nGENDER          : %c",person.gender);
+           printf("\nPHONE_NUMBER    : %s",person.ph_no);
+           printf("\nADDRESS         : %s",person.address);
+           printf("\n---------------------------------------------------------------------------------------");
+        
+        found=1 ;
+        break ;
+      }
+
+   }
+   if(found==1)
+  { 
+   pos=ftell(fp);
+   fseek(fp,(pos-sizeof(person)),SEEK_SET);
+
+   fflush(stdin);
+   printf(" \n ENTER CATEGORY :\n");
+   gets(person.category);
+   fflush(stdin);
+   printf("\n ENTER NAME :\n");
+   gets(person.name);
+   fflush(stdin);
+   printf("\n ENTER GENDER : \n");
+   scanf("%c",&person.gender);
+   fflush(stdin);
+   printf("\n ENTER PHONE NO: \n");
+   gets(person.ph_no);
+   fflush(stdin);
+   printf("\n ENTER ADDRESS :\n");
+   gets(person.address);
+   fflush(stdin);
+   fwrite(&person,sizeof(person),1,fp);
+   fclose(fp);
+  }
+}
